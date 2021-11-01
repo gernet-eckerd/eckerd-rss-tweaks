@@ -10,16 +10,21 @@ Author URI: https://www.eckerd.edu
 
 function eckerd_addimageenclosure() {
 	global $post;
-	if (has_post_thumbnail($post->ID)) {
-		$attachmentID = get_post_thumbnail_id($post->ID);
-		$url = wp_get_attachment_url($attachmentID);
-		$file = get_post($attachmentID);
-		$mimeType = $file->post_mime_type;
-		$meta = wp_get_attachment_metadata($attachmentID);
-		$filePath = wp_upload_dir()['basedir'] . '/' . $meta['file'];
-		//echo "<!-- $filePath -->";
-		$length = filesize($filePath);
-		echo "<enclosure url=\"$url\" length=\"$length\" type=\"$mimeType\" />";
+	try {
+		if (has_post_thumbnail($post->ID)) {
+			$attachmentID = get_post_thumbnail_id($post->ID);
+			$url = wp_get_attachment_url($attachmentID);
+			$file = get_post($attachmentID);
+			$mimeType = $file->post_mime_type;
+			$meta = wp_get_attachment_metadata($attachmentID);
+			$filePath = wp_upload_dir()['basedir'] . '/' . $meta['file'];
+			//echo "<!-- $filePath -->";
+			$length = filesize($filePath);
+			echo "<enclosure url=\"$url\" length=\"$length\" type=\"$mimeType\" />";
+		}
+	}
+	catch (Exception $e) {
+		// nothing to see, nothing to do...
 	}
 }
 add_action('rss2_item', 'eckerd_addimageenclosure');
