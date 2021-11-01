@@ -15,7 +15,9 @@ function eckerd_addimageenclosure() {
 		$url = wp_get_attachment_url($attachmentID);
 		$file = get_post($attachmentID);
 		$mimeType = $file->post_mime_type;
-		echo "<enclosure url=\"$url\" type=\"$mimeType\" />";
+		$meta = wp_get_attachment_metadata($attachmentID);
+		$length = $meta['sizes']['file'];
+		echo "<enclosure url=\"$url\" length=\"$length\" type=\"$mimeType\" />";
 	}
 }
 add_action('rss2_item', 'eckerd_addimageenclosure');
