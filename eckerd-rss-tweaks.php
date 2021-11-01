@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
 Plugin Name: Eckerd College RSS Tweaks
 Plugin URI: https://www.eckerd.edu
@@ -16,8 +16,8 @@ function eckerd_addimageenclosure() {
 		$file = get_post($attachmentID);
 		$mimeType = $file->post_mime_type;
 		$meta = wp_get_attachment_metadata($attachmentID);
-		$filePath = wp_upload_dir()['path'] . '/' . $meta['file'];
-		echo "<!-- $filepath -->";
+		$filePath = wp_upload_dir()['basedir'] . '/' . $meta['file'];
+		//echo "<!-- $filePath -->";
 		$length = filesize($filePath);
 		echo "<enclosure url=\"$url\" length=\"$length\" type=\"$mimeType\" />";
 	}
